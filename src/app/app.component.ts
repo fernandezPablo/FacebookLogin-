@@ -18,7 +18,22 @@ export class AppComponent {
 
   login(){
     console.log('Login ...');
-    FB.login(this.loginCallback);
+    this.facebookLogin().then( result =>{
+      console.log('Result Login: ', result);
+      this.getData().then( result2 => {
+        console.log('User data: ',result2);
+        this.facebookUser = result2;
+      })
+    })
+  }
+
+
+  facebookLogin(){
+    return new Promise(resolve => {
+      FB.login(function (response){
+        resolve(response);
+      });
+    });
   }
 
   getData(){
@@ -27,35 +42,6 @@ export class AppComponent {
     });
   }
 
-  showProfile(){
-    this.facebookUser = FU;
-    this.showUser = true;
-  }
-
-  loginCallback(response){
-    if (response.authResponse) {
-      console.log('Welcome!  Fetching your information.... ');
-      this.getData().then( result =>{
-        console.log('Result promise: ', result);
-      });
-     } else {
-      console.log('User cancelled login or did not fully authorize.');
-     }
-  }
-
-  retrieveData(response){
-    console.log('response: ', response);
-    console.log('Good to see you, ' + response.first_name +' '+ response.last_name + '.');
-    console.log('Tu mail es: ',response.email, '?');
-    console.log('User ID: ', response.id);
-    var elementName = document.getElementById('usr-name');
-    var elementEmail = document.getElementById('usr-name'); 
-    elementName.innerText = response.first_name + response.last_name;
-    elementEmail.innerText = response.email;
-  }
-
-  queryFacebookAPI(){
-    FB.api('/me', {fields: ['first_name','last_name', 'email','picture']}, this.retrieveData);
-  }
-
 }
+
+

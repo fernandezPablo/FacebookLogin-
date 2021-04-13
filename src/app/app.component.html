@@ -1,14 +1,9 @@
 <h3>Facebook Login</h3>
 
 <button class="btn btn-primary" (click)="login()">Facebook</button>
-<button class="btn btn-success" (click)="showProfile()">Mostrar Perfil</button>
 
-<div class="card mt-5">
-  <!-- <img id="usr-img" class="card-img-top" [src]="facebookUser.picture.data.url" alt=""> -->
-  <div class="card-body">
-    <!-- <h5 id="usr-name" class="card-title">{{facebookUser.first_name }} {{facebookUser.last_name}}</h5> -->
-    <h5 id="usr-name" class="card-title"></h5>
-    <!-- <p id="usr-email" class="card-text">{{facebookUser.email}}</p> -->
-    <p id="usr-email" class="card-text"></p>
-  </div>
+<div class="card mt-5" *ngIf="facebookUser">
+  <img id="usr-img" [src]="facebookUser.picture.data.url" alt="" [width]="facebookUser.picture.data.width" [height]="facebookUser.picture.data.height">
+    <h5 id="usr-name" class="card-title">{{facebookUser.first_name }} {{facebookUser.last_name}}</h5>
+    <p id="usr-email" class="card-text">{{facebookUser.email}}</p>
 </div>
